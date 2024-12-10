@@ -1,0 +1,6 @@
+[object Object] [undefined]: undefined
+2024-12-10 20:42:51 [info]: Todo created: {"id":10,"title":"Buy groceries","completed":false,"created_at":"2024-12-10T19:42:51.969Z"}
+2024-12-10 20:43:41 [info]: Fetched all todos, count: 7
+2024-12-10 20:43:56 [info]: Fetched all todos, count: 7
+2024-12-10 20:45:51 [error]: Error fetching todos: Test error for logging
+2024-12-10 20:45:51 [error]: Test error for logging

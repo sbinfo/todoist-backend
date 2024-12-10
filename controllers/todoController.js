@@ -1,4 +1,5 @@
 const prisma = require('../prismaClient');
+const logger = require('../utils/logger');
 
 class TodoController {
 	async create(req, res, next) {
@@ -10,8 +11,11 @@ class TodoController {
 				},
 			});
 
+			logger.info(`Todo created: ${JSON.stringify(newTodo)}`);
+
 			res.status(201).json(newTodo);
 		} catch (err) {
+			logger.error(`Error creating Todo: ${err.message}`);
 			next(err);
 		}
 	}
@@ -22,8 +26,10 @@ class TodoController {
 			await prisma.todo.delete({
 				where: { id: parseInt(id) },
 			});
+			logger.info(`Todo with id:${id} is deleted`);
 			res.status(204).send();
 		} catch (err) {
+			logger.error(`Error deleting todo: ${err.message}`);
 			next(err);
 		}
 	}
@@ -36,8 +42,10 @@ class TodoController {
 				where: { id: parseInt(id) },
 				data: { title, completed },
 			});
+			logger.info(`Todo is updated: ${JSON.stringify(updatedTodo)}`);
 			res.json(updatedTodo);
 		} catch (err) {
+			logger.error(`Error updating todo: ${err.message}`);
 			next(err);
 		}
 	}
@@ -45,8 +53,10 @@ class TodoController {
 	async getAll(req, res, next) {
 		try {
 			const todos = await prisma.todo.findMany();
+			logger.info(`Fetched all todos, count: ${todos.length}`);
 			res.json(todos);
 		} catch (err) {
+			logger.error(`Error fetching todos: ${err.message}`);
 			next(err);
 		}
 	}
@@ -64,8 +74,10 @@ class TodoController {
 				throw error;
 			}
 
+			logger.info(`Fetched Todo: ${JSON.stringify(todo)}`);
 			res.json(todo);
 		} catch (err) {
+			logger.error(`Error fetching todo: ${err.message}`);
 			next(err);
 		}
 	}
